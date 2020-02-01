@@ -4,23 +4,39 @@ const d = Math.hypot(w, w);
 export default p5 => {
   p5.createCanvas(window.innerWidth, window.innerHeight);
 
-  const xn = Math.ceil(window.innerWidth / d);
-  const yn = Math.ceil((window.innerHeight / d) * 2);
+  // const xn = Math.ceil(window.innerWidth / d); // fill
+  // const yn = Math.ceil((window.innerHeight / d) * 2) + 1; // fill
+  const xn = Math.floor(window.innerWidth / d); // fit
+  const yn = Math.floor((window.innerHeight / d) * 2) - 1; // fit
 
   p5.angleMode(p5.DEGREES);
   p5.rectMode(p5.CENTER);
-  p5.translate((window.innerWidth % d) / 2, (window.innerHeight % d) / 2);
+  p5.translate((window.innerWidth % d) / 2, (window.innerHeight % d) / 2); // fill
+  p5.translate(d / 2, d / 2); // fit
 
-  for (let yi = 0; yi < yn; yi++) {
-    const odd = yi % 2;
+  console.log(xn, window.innerWidth % d);
 
-    p5.push();
-    if (odd) {
-      p5.translate(d / 2, 0);
-    }
+  const grid = Array(yn)
+    .fill('')
+    .map((y, yi) =>
+      // Array(yi % 2 ? xn + 1 : xn) // fill
+      Array(yi % 2 ? xn - 1 : xn) // fit
+        .fill('')
+        .map((x, xi) => ({
+          // x: xi * d - (yi % 2 ? d / 2 : 0), // fill
+          // y: (yi - 1) * (d / 2), // fill
+          // x: xi * d + (yi % 2 ? 3000 : 0), // fit
+          x: xi * d + (yi % 2 ? d / 2 : 0), // fit
+          y: yi * (d / 2), // fit
+        }))
+    );
 
-    p5.push();
-    for (let xi = 0; xi < (odd ? xn - 1 : xn); xi++) {
+  grid
+    .reduce((carry, row) => [...carry, ...row], [])
+    .forEach(point => {
+      p5.push();
+      p5.translate(point.x, point.y);
+
       p5.push();
       p5.rotate(45);
       p5.rect(0, 0, w, w);
@@ -31,11 +47,6 @@ export default p5 => {
       p5.ellipse(0, 0, 10);
       p5.pop();
 
-      p5.translate(d, 0);
-    }
-
-    p5.pop();
-    p5.pop();
-    p5.translate(0, d / 2);
-  }
+      p5.pop();
+    });
 };
