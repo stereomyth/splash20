@@ -9,9 +9,19 @@ export default class Line {
     }
   }
 
+  move() {
+    const point = this.grid.nearby(this.points[this.points.length - 1]);
+    if (point) {
+      this.points.push(point);
+    } else {
+      console.log('stuck');
+      this.stuck = true;
+    }
+  }
+
   draw(p5) {
-    p5.stroke(255);
-    p5.strokeWeight(10);
+    p5.stroke(p5.color(0, 255, 0));
+    p5.strokeWeight(this.grid.w / 3);
 
     this.points.forEach((point, i, points) => {
       if (points.length === 1) {
