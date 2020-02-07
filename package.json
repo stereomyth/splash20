@@ -33,5 +33,12 @@
   },
   "dependencies": {
     "p5": "^0.10.2"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "arrowParens": "avoid",
+    "printWidth": 100,
+    "htmlWhitespaceSensitivity": "ignore"
   }
 }
