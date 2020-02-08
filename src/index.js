@@ -46,22 +46,15 @@ new P5(P5 => {
 
     lines.forEach(line => {});
   };
-    lines.forEach(line => {
-      line.move();
-      line.move();
-      line.move();
-      line.move();
-      line.move();
-      line.move();
-      line.move();
-      line.move();
-      line.move();
-    });
+
+  p5.draw = () => {
+    offset();
+    p5.stroke(255);
+    p5.strokeWeight(width / 3);
 
     lines.forEach(line => {
+      line.move();
       line.draw(p5);
     });
   };
-
-  p5.draw = () => {};
 });

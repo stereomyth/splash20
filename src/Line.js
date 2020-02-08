@@ -1,3 +1,5 @@
+const off = 0;
+
 export default class Line {
   constructor(grid) {
     this.grid = grid;
@@ -6,28 +8,30 @@ export default class Line {
     const start = grid.find();
     if (start) {
       this.points = [start];
-    }
-  }
-
-  move() {
-    const point = this.grid.nearby(this.points[this.points.length - 1]);
-    if (point) {
-      this.points.push(point);
     } else {
-      console.log('stuck');
       this.stuck = true;
     }
   }
 
-  draw(p5) {
-    p5.stroke(255);
-    p5.strokeWeight(this.grid.w / 3);
-
-    this.points.forEach((point, i, points) => {
-      if ((points.length > 1 && i > 0) || points.length === 1) {
-        const point0 = points[i - 1] || point;
-        p5.line(point0.x, point0.y, point.x, point.y);
+  move() {
+    if (!this.stuck) {
+      const point = this.grid.nearby(this.points[this.points.length - 1]);
+      if (point) {
+        this.points.push(point);
+      } else {
+        this.stuck = true;
       }
-    });
+    }
+  }
+
+  draw(p5) {
+    if (this.points.length) {
+      const point1 = this.points[this.points.length - 1];
+      const point0 = this.points[this.points.length - 2] || {
+        x: point1.x + off,
+        y: point1.y + off,
+      };
+      p5.line(point0.x, point0.y, point1.x, point1.y);
+    }
   }
 }

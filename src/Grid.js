@@ -95,9 +95,6 @@ export default class Grid {
   }
 
   draw(p5) {
-    p5.translate((window.innerWidth % this.d) / 2, (window.innerHeight % this.d) / 2); // fill
-    p5.translate(this.d / 2, this.d / 2); // fit
-
     p5.push();
 
     this.flat.forEach(point => {
@@ -112,7 +109,7 @@ export default class Grid {
 
       p5.push();
       p5.fill(0);
-      p5.ellipse(0, 0, 10);
+      p5.ellipse(0, 0, this.w / 3);
       p5.pop();
 
       p5.pop();
