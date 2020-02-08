@@ -11,7 +11,7 @@ export default class Grid {
     // const xn = Math.ceil(window.innerWidth / d); // fill
     // const yn = Math.ceil((window.innerHeight / d) * 2) + 1; // fill
     const xn = (this.xn = Math.floor(window.innerWidth / this.d)); // fit
-    const yn = (this.yn = Math.floor((window.innerHeight / this.d) * 2) - 2); // fit
+    const yn = (this.yn = Math.floor((window.innerHeight / this.d) * 2) - 1); // fit
 
     this.state = Array(yn)
       .fill('')
@@ -40,38 +40,64 @@ export default class Grid {
   }
 
   find() {
-    return this.state[3][1];
-    // const cells = this.emptyCells;
+    const cells = this.emptyCells;
 
-    // if (cells.length) {
-    //   const cell = cells[rand(cells.length)];
-    //   cell.busy = true;
-    //   return cell;
-    // }
+    if (cells.length) {
+      const cell = cells[rand(cells.length)];
+      // const cell = this.state[0][0];
+      cell.busy = true;
+      return cell;
+    }
   }
 
   nearby({ yi, xi }) {
-    // console.log();
-    // console.log(this.state[yi][xi - 1]);
-
     let ways = [];
-    // if (yi - 1 >= 0 && yi - 1 < this.yn) {
-    //   ways.push(this.state[yi - 1][xi]);
-    // }
+    const dir = yi % 2 ? { e: 1, w: 0 } : { e: 0, w: -1 };
 
-    if (yi % 2) {
-      ways.push(this.state[yi - 1][xi + 1]); // NE y-1 x+1
-      ways.push(this.state[yi + 1][xi + 1]); // SE y+1 x+1
-      ways.push(this.state[yi + 1][xi]); // SW y+1
-      ways.push(this.state[yi - 1][xi]); // NW y-1
-    } else {
-      ways.push(this.state[yi - 1][xi]); // NE y-1
-      ways.push(this.state[yi + 1][xi]); // SE y+1
-      ways.push(this.state[yi + 1][xi - 1]); // SW y+1 x-1
-      ways.push(this.state[yi - 1][xi - 1]); // NW y-1 x-1
+    // console.log(xi, xi + dir.e);
+    // console.log(this.xn);
+
+    const minY = yi > 0;
+    const maxY = yi < this.yn - 1;
+    const minX = yi % 2 ? -1 : 0;
+    const maxX = this.xn - 1;
+
+    if (minY && xi < maxX) {
+      console.log('can NE');
+      const cell = this.state[yi - 1][xi + dir.e];
+      if (!cell.busy) {
+        ways.push(cell); // NE y-1 x+1
+      }
     }
+    if (maxY && xi < maxX) {
+      console.log('can SE');
+      const cell = this.state[yi + 1][xi + dir.e];
+      if (!cell.busy) {
+        ways.push(cell); // SE y+1 x+1
+      }
+    }
+    if (maxY && xi > minX) {
+      // odd >0 even >-1
+      console.log('can SW');
+      const cell = this.state[yi + 1][xi + dir.w];
+      if (!cell.busy) {
+        ways.push(cell); // SW y+1
+      }
+    }
+    if (minY && xi > minX) {
+      console.log('can NW');
+      const cell = this.state[yi - 1][xi + dir.w];
+      if (!cell.busy) {
+        ways.push(cell); // NW y-1
+      }
+    }
+    console.log('---');
 
-    return ways.length ? ways[rand(ways.length)] : null;
+    if (ways.length) {
+      const choice = rand(ways.length);
+      ways[choice].busy = true;
+      return ways[choice];
+    }
   }
 
   draw(p5) {
