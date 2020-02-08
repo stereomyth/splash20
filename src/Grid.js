@@ -1,9 +1,9 @@
 const rand = max => Math.floor(Math.random() * max);
 
 export default class Grid {
-  constructor() {
+  constructor(w) {
     this.state = [];
-    this.w = 200;
+    this.w = w;
     this.d = Math.hypot(this.w, this.w);
   }
 
