@@ -14,6 +14,7 @@ new P5(p5 => {
 
     p5.angleMode(p5.DEGREES);
     p5.rectMode(p5.CENTER);
+    p5.strokeCap(p5.PROJECT);
 
     grid = new Grid();
     grid.build();

@@ -86,11 +86,12 @@ export default class Grid {
 
       p5.push();
       p5.rotate(45);
+      p5.fill(60);
       p5.rect(0, 0, this.w, this.w);
       p5.pop();
 
       p5.push();
-      p5.fill(200, 0, 0);
+      p5.fill(0);
       p5.ellipse(0, 0, 10);
       p5.pop();
 

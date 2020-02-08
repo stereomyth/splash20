@@ -20,7 +20,7 @@ export default class Line {
   }
 
   draw(p5) {
-    p5.stroke(p5.color(0, 255, 0));
+    p5.stroke(255);
     p5.strokeWeight(this.grid.w / 3);
 
     this.points.forEach((point, i, points) => {
