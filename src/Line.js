@@ -24,12 +24,9 @@ export default class Line {
     p5.strokeWeight(this.grid.w / 3);
 
     this.points.forEach((point, i, points) => {
-      if (points.length === 1) {
-        p5.line(point.x, point.y, point.x, point.y);
-      } else {
-        if (i) {
-          p5.line(points[i - 1].x, points[i - 1].y, point.x, point.y);
-        }
+      if ((points.length > 1 && i > 0) || points.length === 1) {
+        const point0 = points[i - 1] || point;
+        p5.line(point0.x, point0.y, point.x, point.y);
       }
     });
   }
