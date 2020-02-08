@@ -32,6 +32,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: false,
       template: require('html-webpack-template'),
+      meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
     }),
   ],
   output: {
