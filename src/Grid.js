@@ -1,30 +1,24 @@
 const rand = max => Math.floor(Math.random() * max);
 
 export default class Grid {
-  constructor(w) {
+  constructor(w, d) {
     this.state = [];
     this.w = w;
-    this.d = Math.hypot(this.w, this.w);
+    this.d = d;
   }
 
-  build() {
-    // const xn = Math.ceil(window.innerWidth / d); // fill
-    // const yn = Math.ceil((window.innerHeight / d) * 2) + 1; // fill
-    const xn = (this.xn = Math.floor(window.innerWidth / this.d)); // fit
-    const yn = (this.yn = Math.floor((window.innerHeight / this.d) * 2) - 1); // fit
+  build(xn, yn) {
+    this.xn = xn;
+    this.yn = yn;
 
     this.state = Array(yn)
       .fill('')
       .map((y, yi) =>
-        // Array(yi % 2 ? xn + 1 : xn) // fill
-        Array(yi % 2 ? xn - 1 : xn) // fit
+        Array(yi % 2 ? xn - 1 : xn)
           .fill('')
           .map((x, xi) => ({
-            // x: xi * d - (yi % 2 ? d / 2 : 0), // fill
-            // y: (yi - 1) * (d / 2), // fill
-            // x: xi * d + (yi % 2 ? 3000 : 0), // fit
-            x: xi * this.d + (yi % 2 ? this.d / 2 : 0), // fit
-            y: yi * (this.d / 2), // fit
+            x: xi * this.d + (yi % 2 ? this.d / 2 : 0),
+            y: yi * (this.d / 2),
             xi,
             yi,
           }))
@@ -63,14 +57,14 @@ export default class Grid {
     const maxX = this.xn - 1;
 
     if (minY && xi < maxX) {
-      console.log('can NE');
+      // console.log('can NE');
       const cell = this.state[yi - 1][xi + dir.e];
       if (!cell.busy) {
         ways.push(cell); // NE y-1 x+1
       }
     }
     if (maxY && xi < maxX) {
-      console.log('can SE');
+      // console.log('can SE');
       const cell = this.state[yi + 1][xi + dir.e];
       if (!cell.busy) {
         ways.push(cell); // SE y+1 x+1
@@ -78,20 +72,20 @@ export default class Grid {
     }
     if (maxY && xi > minX) {
       // odd >0 even >-1
-      console.log('can SW');
+      // console.log('can SW');
       const cell = this.state[yi + 1][xi + dir.w];
       if (!cell.busy) {
         ways.push(cell); // SW y+1
       }
     }
     if (minY && xi > minX) {
-      console.log('can NW');
+      // console.log('can NW');
       const cell = this.state[yi - 1][xi + dir.w];
       if (!cell.busy) {
         ways.push(cell); // NW y-1
       }
     }
-    console.log('---');
+    // console.log('---');
 
     if (ways.length) {
       const choice = rand(ways.length);
