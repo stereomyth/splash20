@@ -16,6 +16,9 @@ const th = window.innerHeight + 2 * pad;
 const xn = Math.floor(tw / d);
 const yn = Math.floor(th / (d / 2) - 1);
 
+const light = window.matchMedia('(prefers-color-scheme: light)').matches;
+const theme = light ? { bg: 255, line: 200 } : { bg: 20, line: 50 };
+
 const offset = () => {
   p5.translate((tw % d) / 2, ((th % (d / 2)) - 1) / 2);
   p5.translate(d / 2 - pad, d / 2 - pad);
@@ -26,6 +29,7 @@ new P5(P5 => {
 
   p5.setup = () => {
     p5.createCanvas(window.innerWidth, window.innerHeight);
+    p5.background(theme.bg);
 
     p5.angleMode(p5.DEGREES);
     p5.rectMode(p5.CENTER);
@@ -46,7 +50,7 @@ new P5(P5 => {
 
   p5.draw = () => {
     offset();
-    p5.stroke(50);
+    p5.stroke(theme.line);
     p5.strokeWeight(width / 3);
 
     if (grid.emptyCells.length) {
