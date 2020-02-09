@@ -1,8 +1,15 @@
 body {
   padding: 0;
   margin: 0;
+  background-color: #141414;
 }
 
 canvas {
   display: block;
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    background: white;
+  }
 }
