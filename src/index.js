@@ -6,10 +6,10 @@ import './style.css';
 let grid, lines;
 let p5;
 
-const lineCount = 50;
+const lineCount = 0;
 const width = 20;
 const d = Math.hypot(width, width);
-const pad = d / 3;
+const pad = d / 5;
 
 const tw = window.innerWidth + 2 * pad;
 const th = window.innerHeight + 2 * pad;
@@ -33,9 +33,6 @@ new P5(P5 => {
 
     offset();
 
-    p5.textSize(32);
-    p5.fill(255);
-
     grid = new Grid(width, d);
     grid.build(xn, yn);
     // grid.draw(p5);
@@ -49,12 +46,16 @@ new P5(P5 => {
 
   p5.draw = () => {
     offset();
-    p5.stroke(255);
+    p5.stroke(50);
     p5.strokeWeight(width / 3);
 
+    if (grid.emptyCells.length) {
+      lines.push(new Line(grid));
+    }
+
     lines.forEach(line => {
-      line.move();
       line.draw(p5);
+      line.move();
     });
   };
 });

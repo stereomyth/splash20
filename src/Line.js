@@ -1,4 +1,4 @@
-const off = 0;
+const off = 0.001;
 
 export default class Line {
   constructor(grid) {
@@ -25,7 +25,7 @@ export default class Line {
   }
 
   draw(p5) {
-    if (this.points.length) {
+    if (this.points.length && !this.stuck) {
       const point1 = this.points[this.points.length - 1];
       const point0 = this.points[this.points.length - 2] || {
         x: point1.x + off,
