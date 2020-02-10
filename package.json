@@ -4,8 +4,8 @@
   "description": "splash20",
   "private": true,
   "scripts": {
-    "build": "webpack",
-    "dev": "webpack-dev-server"
+    "build": "webpack --config webpack.prod.js",
+    "dev": "webpack-dev-server --config webpack.dev.js"
   },
   "repository": {
     "type": "git",
