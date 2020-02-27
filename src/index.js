@@ -6,7 +6,7 @@ import './style.css';
 let grid, lines;
 let p5;
 
-const lineCount = 0;
+const lineCount = 100;
 const width = 20;
 const d = Math.hypot(width, width);
 const pad = d / 5;
@@ -51,7 +51,7 @@ new P5(P5 => {
   p5.draw = () => {
     offset();
     p5.stroke(theme.line);
-    p5.strokeWeight(width / 3);
+    p5.strokeWeight(width / 2);
 
     if (grid.emptyCells.length) {
       lines.push(new Line(grid));
