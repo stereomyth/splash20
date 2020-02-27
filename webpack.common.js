@@ -43,6 +43,7 @@ module.exports = {
         { rel: 'manifest', href: '/site.webmanifest' },
         { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#030303' },
       ],
+      headHtmlSnippet: '<style>body{ background: #141414 }</style>',
     }),
   ],
 
