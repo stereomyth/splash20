@@ -28,6 +28,7 @@ new P5(P5 => {
   p5 = P5;
 
   p5.setup = () => {
+    // p5.frameRate(10);
     p5.createCanvas(window.innerWidth, window.innerHeight);
     p5.background(theme.bg);
 
@@ -49,6 +50,9 @@ new P5(P5 => {
   };
 
   p5.draw = () => {
+    p5.background(`rgba(20,20,20,.3)`);
+    // p5.background(theme.bg);
+    // p5.clear();
     offset();
     p5.stroke(theme.line);
     p5.strokeWeight(width / 2);

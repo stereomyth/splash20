@@ -94,6 +94,10 @@ export default class Grid {
     }
   }
 
+  leave(point) {
+    point.busy = false;
+  }
+
   draw(p5) {
     p5.push();
 
